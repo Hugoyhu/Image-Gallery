@@ -1,13 +1,13 @@
-const http = require("http");
+const express = require('express')
+const app = express()
+const port = 3000
+
 require('dotenv').config();
 const db = require("@supabase/supabase-js");
-const host = 'localhost';
-const port = 8000;
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
 const supabase = db.createClient(supabaseUrl, supabaseKey)
-
 
 async function fetchData () {
     const { data } = await supabase
@@ -143,18 +143,17 @@ async function fetchData () {
     return htmlCode;
 }
 
-fetchData();
+app.get('/', async (req, res) => {
 
-const requestListener = async function (req, res) {
+    console.log("hello!")
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
     html = await fetchData();
 
     res.end(html);
-};
-
-const server = http.createServer(requestListener);
-server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-});
+})
+  
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
