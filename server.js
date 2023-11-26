@@ -15,7 +15,6 @@ async function fetchData () {
         .select()
         .order('Time', { ascending: false })
 
-    console.log(data);
 
     row1 = ``;
     row2 = ``;
@@ -145,7 +144,6 @@ async function fetchData () {
 
 app.get('/', async (req, res) => {
 
-    console.log("hello!")
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
