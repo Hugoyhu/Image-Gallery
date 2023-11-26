@@ -1,13 +1,13 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
 
 require('dotenv').config();
 const db = require("@supabase/supabase-js");
 
-const supabaseUrl = process.env.SUPABASE_URL
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = db.createClient(supabaseUrl, supabaseKey)
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = db.createClient(supabaseUrl, supabaseKey);
 
 async function fetchData () {
     const { data } = await supabase
