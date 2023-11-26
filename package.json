@@ -1,20 +1,13 @@
 {
-    "name": "image-gallery",
-    "version": "1.0.0",
-    "description": "",
-    "scripts": {
-        "build": "echo \"No build specified\" && exit 1",
-        "test": "echo \"No test specified\" && exit 1",
-        "start": "node server.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Hugoyhu/image-gallery.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Hugoyhu/image-gallery/issues"
-    },
-    "homepage": "https://github.com/Hugoyhu/image-gallery#readme"
+  "name": "image-gallery",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/Hugoyhu/image-gallery.git",
+  "author": "Hugo Hu",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "supabase": "^1.113.3"
+  }
 }
