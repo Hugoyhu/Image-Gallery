@@ -9,6 +9,14 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = db.createClient(supabaseUrl, supabaseKey);
 
+function vertical (width, height) {
+    if (width/height < 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 async function fetchData () {
     const { data } = await supabase
         .from('images')
@@ -23,6 +31,11 @@ async function fetchData () {
 
     counter = 1;
 
+    vertical1 = false;
+    vertical2 = false;
+    vertical3 = false;
+    vertical4 = false;
+
     for (i = 0; i < data.length; ++i) {
         optimizedLink = data[i].link.slice(0, 49) + "w_1200,f_auto/" + data[i].link.slice(49);
 
@@ -30,22 +43,68 @@ async function fetchData () {
                 ${data[i].Model}, ${data[i].Lens}
                 <br>${data[i].Focal} at ${data[i].FNumber} at ${data[i].Exposure} at ISO ${data[i].ISO}
             </figcaption>`
+
+        console.log(vertical(data[i].Width, data[i].Height));
         switch (counter) {
             case 1:
+                if (vertical1 == true) {
+                    // skip new image to even heights out
+                    vertical1 = false;
+                    break;
+                }
+
                 row1 += htmlSnippet;
                 counter++;
+
+                if (vertical(data[i].Width, data[i].Height)) {
+                    vertical1 = true;
+                }
+
                 break;
             case 2:
+                if (vertical2 == true) {
+                    // skip new image to even heights out
+                    vertical2 = false;
+                    break;
+                }
+
                 row2 += htmlSnippet;
                 counter++;
+
+                if (vertical(data[i].Width, data[i].Height)) {
+                    vertical2 = true;
+                }
+
                 break;
             case 3:
+                if (vertical3 == true) {
+                    // skip new image to even heights out
+                    vertical3 = false;
+                    break;
+                }
+
                 row3 += htmlSnippet;
                 counter++;
+
+                if (vertical(data[i].Width, data[i].Height)) {
+                    vertical3 = true;
+                }
+
                 break;
             case 4:
+                if (vertical4 == true) {
+                    // skip new image to even heights out
+                    vertical4 = false;
+                    break;
+                }
+
                 row4 += htmlSnippet;
                 counter = 1;
+
+                if (vertical(data[i].Width, data[i].Height)) {
+                    vertical4 = true;
+                }
+
                 break;
         }
     }
