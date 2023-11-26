@@ -33,23 +33,20 @@ async function fetchData () {
         switch (counter) {
             case 1:
                 row1 += htmlSnippet;
-                counter++
+                counter++;
                 break;
             case 2:
                 row2 += htmlSnippet;
-                counter++
+                counter++;
                 break;
             case 3:
                 row3 += htmlSnippet;
+                counter++;
+                break;
+            case 4:
+                row4 += htmlSnippet;
                 counter = 1;
                 break;
-            // case 4:
-            //     row4 += `<img src="${data[i].link}" style="width:100%"><figcaption class="figure-caption text-center">
-            //             ${data[i].Model}, ${data[i].Lens}
-            //             <br>${data[i].Focal} at ${data[i].FNumber} at ${data[i].Exposure} at ISO${data[i].ISO}
-            //         </figcaption>`
-            //     counter = 1;
-            //     break;
         }
     }
 
@@ -89,9 +86,9 @@ async function fetchData () {
       
 
     .column {
-    -ms-flex: 33.33%; /* IE10 */
-    flex: 33.33%;
-    max-width: 33.33%;
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    max-width: 25%;
     padding: 0 4px;
     }
 
@@ -132,6 +129,9 @@ async function fetchData () {
     </div>  
     <div class="column">
         ${row3}
+    </div>
+    <div class="column">
+        ${row4}
     </div>
     </div>
 
