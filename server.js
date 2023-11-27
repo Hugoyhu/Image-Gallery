@@ -9,6 +9,15 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = db.createClient(supabaseUrl, supabaseKey);
 
+function requireHTTPS(req, res, next) {
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
+      return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+}
+
+app.use(requireHTTPS);
+
 function vertical (width, height) {
     if (width/height < 1) {
         return true;
