@@ -176,7 +176,8 @@ async function fetchData () {
     <body>
 
     <div class="header">
-    <h1>Photo Gallery</h1>
+    <h1>HUGO HU</h1>
+    <p><a href="https://www.hugohu.me">https://www.hugohu.me</a></p>
     </div>
 
     <div class="row"> 
