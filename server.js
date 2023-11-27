@@ -48,10 +48,16 @@ async function fetchData () {
     for (i = 0; i < data.length; ++i) {
         optimizedLink = data[i].link.slice(0, 49) + "w_1200,f_auto/" + data[i].link.slice(49);
 
+        thirdLine = ' '
+        if (data[i].Description != '') {
+            thirdLine = `<br>${data[i].Description}`
+        }
+
         htmlSnippet = `<a href=${data[i].link} target="_blank"><img src="${optimizedLink}" style="width:100%"></a><figcaption class="figure-caption text-center">
                 ${data[i].Model}, ${data[i].Lens}
-                <br>${data[i].Focal} at ${data[i].FNumber} at ${data[i].Exposure} at ISO ${data[i].ISO}
+                <br>${data[i].Focal} <span>&#183;</span> ${data[i].FNumber} <span>&#183;</span> ${data[i].Exposure}s <span>&#183;</span> ISO${data[i].ISO} ${thirdLine}
             </figcaption>`
+
 
         switch (counter) {
             case 1:
