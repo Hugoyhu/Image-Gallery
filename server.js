@@ -53,12 +53,13 @@ async function fetchData () {
                 <br>${data[i].Focal} at ${data[i].FNumber} at ${data[i].Exposure} at ISO ${data[i].ISO}
             </figcaption>`
 
-        console.log(vertical(data[i].Width, data[i].Height));
         switch (counter) {
             case 1:
                 if (vertical1 == true) {
                     // skip new image to even heights out
                     vertical1 = false;
+                    row2 += htmlSnippet;
+                    counter++;
                     break;
                 }
 
@@ -74,6 +75,8 @@ async function fetchData () {
                 if (vertical2 == true) {
                     // skip new image to even heights out
                     vertical2 = false;
+                    row3 += htmlSnippet;
+                    counter++;
                     break;
                 }
 
@@ -89,6 +92,8 @@ async function fetchData () {
                 if (vertical3 == true) {
                     // skip new image to even heights out
                     vertical3 = false;
+                    row4 += htmlSnippet;
+                    counter++;
                     break;
                 }
 
@@ -104,6 +109,8 @@ async function fetchData () {
                 if (vertical4 == true) {
                     // skip new image to even heights out
                     vertical4 = false;
+                    row1 += htmlSnippet;
+                    counter++;
                     break;
                 }
 
