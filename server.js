@@ -116,7 +116,7 @@ async function fetchData () {
                     // skip new image to even heights out
                     vertical4 = false;
                     row1 += htmlSnippet;
-                    counter++;
+                    counter = 1;
                     break;
                 }
 
