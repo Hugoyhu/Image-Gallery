@@ -46,13 +46,13 @@ function vertical (width, height) {
 }
 
 async function fetchData () {
-    const { data } = await supabase
+    var { data } = await supabase
         .from('images')
         .select()
         .order('Time', { ascending: false })
 
     data = shuffle(data);
-    
+
     row1 = ``;
     row2 = ``;
     row3 = ``;
