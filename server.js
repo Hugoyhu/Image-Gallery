@@ -18,24 +18,24 @@ function requireHTTPS(req, res, next) {
 
 app.use(requireHTTPS);
 
-// this code is COPIED from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array.
-function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
+// // this code is COPIED from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array.
+// function shuffle(array) {
+//     let currentIndex = array.length,  randomIndex;
   
-    // While there remain elements to shuffle.
-    while (currentIndex > 0) {
+//     // While there remain elements to shuffle.
+//     while (currentIndex > 0) {
   
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
+//       // Pick a remaining element.
+//       randomIndex = Math.floor(Math.random() * currentIndex);
+//       currentIndex--;
   
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
+//       // And swap it with the current element.
+//       [array[currentIndex], array[randomIndex]] = [
+//         array[randomIndex], array[currentIndex]];
+//     }
   
-    return array;
-}
+//     return array;
+// }
 
 function vertical (width, height) {
     if (width/height < 1) {
@@ -51,7 +51,7 @@ async function fetchData () {
         .select()
         .order('Time', { ascending: false })
 
-    data = shuffle(data);
+    // data = shuffle(data);
 
     row1 = ``;
     row2 = ``;
@@ -98,6 +98,7 @@ async function fetchData () {
                 }
 
                 break;
+
             case 2:
                 if (vertical2 == true) {
                     // skip new image to even heights out
@@ -108,49 +109,67 @@ async function fetchData () {
                 }
 
                 row2 += htmlSnippet;
-                counter++;
+                counter = 1;
 
                 if (vertical(data[i].Width, data[i].Height)) {
                     vertical2 = true;
                 }
 
                 break;
-            case 3:
-                if (vertical3 == true) {
-                    // skip new image to even heights out
-                    vertical3 = false;
-                    row4 += htmlSnippet;
-                    counter++;
-                    break;
-                }
 
-                row3 += htmlSnippet;
-                counter++;
+        //     case 2:
+        //         if (vertical2 == true) {
+        //             // skip new image to even heights out
+        //             vertical2 = false;
+        //             row3 += htmlSnippet;
+        //             counter++;
+        //             break;
+        //         }
 
-                if (vertical(data[i].Width, data[i].Height)) {
-                    vertical3 = true;
-                }
+        //         row2 += htmlSnippet;
+        //         counter++;
 
-                break;
-            case 4:
-                if (vertical4 == true) {
-                    // skip new image to even heights out
-                    vertical4 = false;
-                    row1 += htmlSnippet;
-                    counter = 1;
-                    break;
-                }
+        //         if (vertical(data[i].Width, data[i].Height)) {
+        //             vertical2 = true;
+        //         }
 
-                row4 += htmlSnippet;
-                counter = 1;
+        //         break;
+        //     case 3:
+        //         if (vertical3 == true) {
+        //             // skip new image to even heights out
+        //             vertical3 = false;
+        //             row4 += htmlSnippet;
+        //             counter++;
+        //             break;
+        //         }
 
-                if (vertical(data[i].Width, data[i].Height)) {
-                    vertical4 = true;
-                }
+        //         row3 += htmlSnippet;
+        //         counter++;
 
-                break;
+        //         if (vertical(data[i].Width, data[i].Height)) {
+        //             vertical3 = true;
+        //         }
+
+        //         break;
+        //     case 4:
+        //         if (vertical4 == true) {
+        //             // skip new image to even heights out
+        //             vertical4 = false;
+        //             row1 += htmlSnippet;
+        //             counter = 1;
+        //             break;
+        //         }
+
+        //         row4 += htmlSnippet;
+        //         counter = 1;
+
+        //         if (vertical(data[i].Width, data[i].Height)) {
+        //             vertical4 = true;
+        //         }
+
+        //         break;
+        // }
         }
-    }
 
     htmlCode = `
     <!DOCTYPE html>
@@ -188,9 +207,9 @@ async function fetchData () {
       
 
     .column {
-    -ms-flex: 25%; /* IE10 */
-    flex: 25%;
-    max-width: 25%;
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+    max-width: 50%;
     padding: 0 4px;
     }
 
@@ -200,21 +219,6 @@ async function fetchData () {
     width: 100%;
     }
 
-    @media screen and (max-width: 1200px) {
-    .column {
-        -ms-flex: 50%;
-        flex: 50%;
-        max-width: 50%;
-    }
-    }
-
-    @media screen and (max-width: 800px) {
-    .column {
-        -ms-flex: 100%;
-        flex: 100%;
-        max-width: 100%;
-    }
-    }
     </style>
     <body>
 
@@ -232,12 +236,7 @@ async function fetchData () {
     <div class="column">
         ${row2}
     </div>  
-    <div class="column">
-        ${row3}
-    </div>
-    <div class="column">
-        ${row4}
-    </div>
+    
     </div>
 
     </body>
@@ -246,6 +245,30 @@ async function fetchData () {
 
     return htmlCode;
 }
+}
+
+// @media screen and (max-width: 1200px) {
+//     .column {
+//         -ms-flex: 50%;
+//         flex: 50%;
+//         max-width: 50%;
+//     }
+//     }
+
+//     @media screen and (max-width: 800px) {
+//     .column {
+//         -ms-flex: 100%;
+//         flex: 100%;
+//         max-width: 100%;
+//     }
+//     }
+
+// <div class="column">
+//         ${row3}
+//     </div>
+//     <div class="column">
+//         ${row4}
+//     </div>
 
 app.get('/', async (req, res) => {
 
