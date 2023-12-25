@@ -18,6 +18,25 @@ function requireHTTPS(req, res, next) {
 
 app.use(requireHTTPS);
 
+// this code is COPIED from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array.
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+}
+
 function vertical (width, height) {
     if (width/height < 1) {
         return true;
@@ -32,7 +51,8 @@ async function fetchData () {
         .select()
         .order('Time', { ascending: false })
 
-
+    data = shuffle(data);
+    
     row1 = ``;
     row2 = ``;
     row3 = ``;
