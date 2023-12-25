@@ -170,6 +170,7 @@ async function fetchData () {
         //         break;
         // }
         }
+    }
 
     htmlCode = `
     <!DOCTYPE html>
@@ -245,7 +246,7 @@ async function fetchData () {
 
     return htmlCode;
 }
-}
+
 
 // @media screen and (max-width: 1200px) {
 //     .column {
