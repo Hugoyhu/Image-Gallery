@@ -235,6 +235,22 @@ async function fetchData (sortFilterFunc, input1) {
     <a href="/">Time (Newest First)</a>&nbsp&nbsp
     <a href="/random">Random Order</a>
 
+
+    <br>
+    <br>
+    <a href="/lens/EF24-70mm%20f%2F2.8L%20USM">EF24-70mm</a>&nbsp&nbsp
+    <a href="/lens/EF24-70mm%20f%2F2.8L%20II%20USM">EF24-70mm II</a>&nbsp&nbsp
+    
+    <a href="/lens/EF16-35mm%20f%2F4L%20IS%20USM">EF16-35mm</a>&nbsp&nbsp
+
+    <a href="/lens/EF100-300mm%20f%2F5.6">EF100-300mm</a>&nbsp&nbsp
+    <a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM">EF70-200mm III</a>&nbsp&nbsp
+    <a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM%20%2B1.4x%20III">EF70-200mm III + 1.4x III</a>&nbsp&nbsp
+
+    <a href="/lens/RF15-35mm%20F2.8%20L%20IS%20USM">RF15-35mm</a>&nbsp&nbsp
+    <a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>
+
+
     <br>
     <br>
 
@@ -267,24 +283,6 @@ async function fetchData (sortFilterFunc, input1) {
 
     return htmlCode;
 }
-
-
-
-{/* <br>
-<br>
-<a href="/lens/EF24-70mm%20f%2F2.8L%20USM">EF24-70mm</a>&nbsp&nbsp
-<a href="/lens/EF24-70mm%20f%2F2.8L%20II%20USM">EF24-70mm II</a>&nbsp&nbsp
-
-<a href="/lens/EF16-35mm%20f%2F4L%20IS%20USM">EF16-35mm</a>&nbsp&nbsp
-
-<a href="/lens/EF100-300mm%20f%2F5.6">EF100-300mm</a>&nbsp&nbsp
-<a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM">EF70-200mm III</a>&nbsp&nbsp
-<a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM%20%2B1.4x%20III">EF70-200mm III + 1.4x III</a>&nbsp&nbsp
-
-<a href="/lens/RF15-35mm%20F2.8%20L%20IS%20USM">RF15-35mm</a>&nbsp&nbsp
-<a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>
- */}
-
 
 
 // @media screen and (max-width: 1200px) {
@@ -354,14 +352,12 @@ function sortLens (data, phrase) {
     return tempData;
 }
 
-app.get('/lens/:lensModel', async (req, res) => {
+app.get('/lens/*', async (req, res) => {
 
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    console.log(req.params["lensModel"])
-
-    html = await fetchData(sortLens, req.params["lensModel"]);
+    html = await fetchData(sortLens, decodeURIComponent(req.url.slice(6)));
 
     res.end(html);
 })
