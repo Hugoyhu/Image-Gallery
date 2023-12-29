@@ -18,24 +18,26 @@ function requireHTTPS(req, res, next) {
 
 app.use(requireHTTPS);
 
-// // this code is COPIED from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array.
-// function shuffle(array) {
-//     let currentIndex = array.length,  randomIndex;
+
+
+// this code is COPIED from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array.
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
   
-//     // While there remain elements to shuffle.
-//     while (currentIndex > 0) {
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
   
-//       // Pick a remaining element.
-//       randomIndex = Math.floor(Math.random() * currentIndex);
-//       currentIndex--;
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
   
-//       // And swap it with the current element.
-//       [array[currentIndex], array[randomIndex]] = [
-//         array[randomIndex], array[currentIndex]];
-//     }
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
   
-//     return array;
-// }
+    return array;
+}
 
 function vertical (width, height) {
     if (width/height < 1) {
@@ -45,13 +47,13 @@ function vertical (width, height) {
     }
 }
 
-async function fetchData () {
+async function fetchData (sortFilterFunc, input1) {
     var { data } = await supabase
         .from('images')
         .select()
         .order('Time', { ascending: false })
 
-    // data = shuffle(data);
+    data = sortFilterFunc(data, input1);
 
     row1 = ``;
     row2 = ``;
@@ -228,6 +230,41 @@ async function fetchData () {
     <p><a href="https://www.hugohu.me">https://www.hugohu.me</a></p>
     <p><a href="mailto: photography@hugohu.me">photography@hugohu.me</a></p>
     <p><a href="https://www.hugohu.me/editing.html">Editing Guidelines</a></p>
+
+    <h3>Sort By:</h3>
+    <a href="/">Time (Newest First)</a>&nbsp&nbsp
+    <a href="/random">Random Order</a>
+
+
+    <br>
+    <br>
+    <a href="/lens/EF24-70mm%20f%2F2.8L%20USM">EF24-70mm</a>&nbsp&nbsp
+    <a href="/lens/EF24-70mm%20f%2F2.8L%20II%20USM">EF24-70mm II</a>&nbsp&nbsp
+    
+    <a href="/lens/EF16-35mm%20f%2F4L%20IS%20USM">EF16-35mm</a>&nbsp&nbsp
+
+    <a href="/lens/EF100-300mm%20f%2F5.6">EF100-300mm</a>&nbsp&nbsp
+    <a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM">EF70-200mm III</a>&nbsp&nbsp
+    <a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM%20%2B1.4x%20III">EF70-200mm III + 1.4x III</a>&nbsp&nbsp
+
+    <a href="/lens/RF15-35mm%20F2.8%20L%20IS%20USM">RF15-35mm</a>&nbsp&nbsp
+    <a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>
+
+
+    <br>
+    <br>
+
+    <a href="/category/landscape">Landscape</a>&nbsp&nbsp
+    <a href="/category/nature">Nature</a>&nbsp&nbsp
+    <a href="/category/birds">Birds</a>&nbsp&nbsp
+    <a href="/category/animals">Animals</a>&nbsp&nbsp
+    <a href="/category/metropolitan">Metropolitan</a>&nbsp&nbsp
+    <a href="/category/flowers">Flowers</a>&nbsp&nbsp
+    <a href="/category/objects">Objects</a>&nbsp&nbsp
+    <a href="/category/astrophotography">Astro</a>
+
+
+
     </div>
 
     <div class="row"> 
@@ -271,15 +308,83 @@ async function fetchData () {
 //         ${row4}
 //     </div>
 
+
+function doNone (data) {
+    return data;
+}
+
 app.get('/', async (req, res) => {
 
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    html = await fetchData();
+    html = await fetchData(doNone, 0);
 
     res.end(html);
 })
+
+
+function random (data) {
+    return shuffle(data);
+}
+
+app.get('/random', async (req, res) => {
+
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200);
+
+    html = await fetchData(random, 0);
+
+    res.end(html);
+})
+
+
+
+function sortLens (data, phrase) {
+    tempData = [];
+
+    for (i = 0; i < data.length; ++i) {
+        if (data[i].Lens == phrase) {
+            tempData.push(data[i]);
+        }
+    }
+
+    return tempData;
+}
+
+app.get('/lens/:lensModel', async (req, res) => {
+
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200);
+
+    html = await fetchData(sortLens, decodeURIComponent(req.params["lensModel"]));
+
+    res.end(html);
+})
+
+
+function sortCategory (data, phrase) {
+    tempData = [];
+
+    for (i = 0; i < data.length; ++i) {
+        if (data[i].Label == phrase) {
+            tempData.push(data[i]);
+        }
+    }
+
+    return tempData;
+}
+
+app.get('/category/:cat', async (req, res) => {
+
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200);
+
+    html = await fetchData(sortCategory, req.params["cat"]);
+
+    res.end(html);
+})
+
   
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
