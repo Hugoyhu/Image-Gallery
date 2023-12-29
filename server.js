@@ -357,6 +357,8 @@ app.get('/lens/:lensModel', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
+    console.log(req.params["lensModel"])
+
     html = await fetchData(sortLens, req.params["lensModel"]);
 
     res.end(html);
