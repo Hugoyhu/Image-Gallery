@@ -317,10 +317,10 @@ async function fetchData (sortFilterFunc, input1) {
 //     </div>
 
 
-function sendPostHog () {
+function sendPostHog (event) {
     PostHogClient.capture({
-        distinctId: 'test-id',
-        event: 'test-event'
+        distinctId: 'Image-Gallery',
+        event: event
     });
 
     PostHogClient.flush();
@@ -335,7 +335,7 @@ app.get('/', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog();
+    sendPostHog("main");
 
     html = await fetchData(doNone, 0);
 
@@ -351,6 +351,8 @@ app.get('/random', async (req, res) => {
 
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
+
+    sendPostHog("random");
 
     html = await fetchData(random, 0);
 
@@ -376,6 +378,8 @@ app.get('/lens/*', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
+    sendPostHog(decodeURIComponent(req.url.slice(6)));
+
     html = await fetchData(sortLens, decodeURIComponent(req.url.slice(6)));
 
     res.end(html);
@@ -398,6 +402,8 @@ app.get('/category/:cat', async (req, res) => {
 
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
+
+    sendPostHog(req.params["cat"]);
 
     html = await fetchData(sortCategory, req.params["cat"]);
 
