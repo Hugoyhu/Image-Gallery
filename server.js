@@ -9,6 +9,14 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = db.createClient(supabaseUrl, supabaseKey);
 
+const PostHog = require('posthog-node');
+
+const PostHogClient = new PostHog(
+    process.env.POSTHOG,
+    { host: 'https://us.posthog.com' }
+)
+
+
 function requireHTTPS(req, res, next) {
     if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
       return res.redirect('https://' + req.get('host') + req.url);
@@ -309,6 +317,13 @@ async function fetchData (sortFilterFunc, input1) {
 //     </div>
 
 
+function sendPostHog () {
+    PostHogClient.capture({
+        distinctId: 'test-id',
+        event: 'test-event'
+    })
+}
+
 function doNone (data) {
     return data;
 }
@@ -317,6 +332,8 @@ app.get('/', async (req, res) => {
 
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
+
+    sendPostHog();
 
     html = await fetchData(doNone, 0);
 
