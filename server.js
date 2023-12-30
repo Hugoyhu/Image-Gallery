@@ -9,7 +9,7 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = db.createClient(supabaseUrl, supabaseKey);
 
-const PostHog = require('posthog-node');
+import { PostHog } from 'posthog-node'
 
 const PostHogClient = new PostHog(
     process.env.POSTHOG,
