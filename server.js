@@ -321,7 +321,9 @@ function sendPostHog () {
     PostHogClient.capture({
         distinctId: 'test-id',
         event: 'test-event'
-    })
+    });
+
+    PostHogClient.flush();
 }
 
 function doNone (data) {
