@@ -11,7 +11,7 @@ const supabase = db.createClient(supabaseUrl, supabaseKey);
 
 const PostHog = require('posthog-node');
 
-const PostHogClient = new PostHog(
+const PostHogClient = new PostHog.PostHog(
     process.env.POSTHOG,
     { host: 'https://us.posthog.com' }
 )
