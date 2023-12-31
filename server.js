@@ -319,7 +319,7 @@ async function fetchData (sortFilterFunc, input1) {
 
 function sendPostHog (event) {
     PostHogClient.capture({
-        distinctId: 'Image-Gallery',
+        distinctId: req.ip,
         event: event
     });
 
