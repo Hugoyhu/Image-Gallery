@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const publicIP = require('public-ip');
+
 require('dotenv').config();
 const db = require("@supabase/supabase-js");
 
@@ -317,7 +319,10 @@ async function fetchData (sortFilterFunc, input1) {
 //     </div>
 
 
-function sendPostHog (event, IP) {
+async function sendPostHog (event) {
+
+    IP = await publicIP.publicIp();
+
     PostHogClient.capture({
         distinctId: IP,
         event: event
@@ -335,7 +340,7 @@ app.get('/', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog("main", req.ip);
+    sendPostHog("main");
 
     html = await fetchData(doNone, 0);
 
@@ -352,7 +357,7 @@ app.get('/random', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog("random", req.ip);
+    sendPostHog("random");
 
     html = await fetchData(random, 0);
 
@@ -378,7 +383,7 @@ app.get('/lens/*', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog(decodeURIComponent(req.url.slice(6)), req.ip);
+    sendPostHog(decodeURIComponent(req.url.slice(6)));
 
     html = await fetchData(sortLens, decodeURIComponent(req.url.slice(6)));
 
@@ -403,7 +408,7 @@ app.get('/category/:cat', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog(req.params["cat"], req.ip);
+    sendPostHog(req.params["cat"]);
 
     html = await fetchData(sortCategory, req.params["cat"]);
 
