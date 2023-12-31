@@ -317,9 +317,9 @@ async function fetchData (sortFilterFunc, input1) {
 //     </div>
 
 
-function sendPostHog (event) {
+function sendPostHog (event, IP) {
     PostHogClient.capture({
-        distinctId: req.ip,
+        distinctId: IP,
         event: event
     });
 
@@ -335,7 +335,7 @@ app.get('/', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog("main");
+    sendPostHog("main", req.ip);
 
     html = await fetchData(doNone, 0);
 
@@ -352,7 +352,7 @@ app.get('/random', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog("random");
+    sendPostHog("random", req.ip);
 
     html = await fetchData(random, 0);
 
@@ -378,7 +378,7 @@ app.get('/lens/*', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog(decodeURIComponent(req.url.slice(6)));
+    sendPostHog(decodeURIComponent(req.url.slice(6)), req.ip);
 
     html = await fetchData(sortLens, decodeURIComponent(req.url.slice(6)));
 
@@ -403,7 +403,7 @@ app.get('/category/:cat', async (req, res) => {
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
 
-    sendPostHog(req.params["cat"]);
+    sendPostHog(req.params["cat"], req.ip);
 
     html = await fetchData(sortCategory, req.params["cat"]);
 
