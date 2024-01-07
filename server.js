@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const publicIp = require('public-ip');
-
 require('dotenv').config();
 const db = require("@supabase/supabase-js");
 
@@ -239,7 +237,7 @@ async function fetchData (sortFilterFunc, input1) {
     <h1>HUGO HU</h1>
     <p><a href="https://www.hugohu.me">https://www.hugohu.me</a></p>
     <p><a href="mailto: photography@hugohu.me">photography@hugohu.me</a></p>
-    <p>These images have been downsized, but you can see a higher quality image if you click on the preview. Images are <10MB.</p>
+    <p><a href="https://www.hugohu.me/editing.html">Editing Guidelines</a></p>
 
     <h3>Sort By:</h3>
     <a href="/">Time (Newest First)</a>&nbsp&nbsp
@@ -258,8 +256,8 @@ async function fetchData (sortFilterFunc, input1) {
     <a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM%20%2B1.4x%20III">EF70-200mm III + 1.4x III</a>&nbsp&nbsp
 
     <a href="/lens/RF15-35mm%20F2.8%20L%20IS%20USM">RF15-35mm</a>&nbsp&nbsp
-    <a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>&nbsp&nbsp
-    <a href="/lens/RF100-500mm%20F4.5-7.1%20L%20IS%20USM">RF100-500mm</a>
+    <a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>
+
 
     <br>
     <br>
@@ -319,8 +317,7 @@ async function fetchData (sortFilterFunc, input1) {
 //     </div>
 
 
-async function sendPostHog (event, IP) {
-
+function sendPostHog (event, IP) {
     PostHogClient.capture({
         distinctId: IP,
         event: event
