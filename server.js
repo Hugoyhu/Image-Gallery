@@ -258,8 +258,8 @@ async function fetchData (sortFilterFunc, input1) {
     <a href="/lens/EF70-200mm%20f%2F2.8L%20IS%20III%20USM%20%2B1.4x%20III">EF70-200mm III + 1.4x III</a>&nbsp&nbsp
 
     <a href="/lens/RF15-35mm%20F2.8%20L%20IS%20USM">RF15-35mm</a>&nbsp&nbsp
-    <a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>
-
+    <a href="/lens/RF100mm%20F2.8%20L%20MACRO%20IS%20USM">RF100mm</a>&nbsp&nbsp
+    <a href="/lens/RF100-500mm%20F4.5-7.1%20L%20IS%20USM">RF100-500mm</a>
 
     <br>
     <br>
