@@ -239,7 +239,7 @@ async function fetchData (sortFilterFunc, input1) {
     <h1>HUGO HU</h1>
     <p><a href="https://www.hugohu.me">https://www.hugohu.me</a></p>
     <p><a href="mailto: photography@hugohu.me">photography@hugohu.me</a></p>
-    <p><a href="https://www.hugohu.me/editing.html">Editing Guidelines</a></p>
+    <p>These images have been downsized, but you can see a higher quality image if you click on the preview. Images are <10MB.</p>
 
     <h3>Sort By:</h3>
     <a href="/">Time (Newest First)</a>&nbsp&nbsp
