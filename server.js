@@ -237,7 +237,7 @@ async function fetchData (sortFilterFunc, input1) {
     <h1>HUGO HU</h1>
     <p><a href="https://www.hugohu.me">https://www.hugohu.me</a></p>
     <p><a href="mailto: photography@hugohu.me">photography@hugohu.me</a></p>
-    <p><a href="https://www.hugohu.me/editing.html">Editing Guidelines</a></p>
+    <p>These images have been optimized to reduce the total amount of data loaded to your device. To see the full resolution image, click the image and it will show up in a new tab, full resolution!</p>
 
     <h3>Sort By:</h3>
     <a href="/">Time (Newest First)</a>&nbsp&nbsp
