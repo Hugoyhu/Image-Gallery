@@ -17,14 +17,14 @@ const PostHogClient = new PostHog.PostHog(
 )
 
 
-function requireHTTPS(req, res, next) {
-    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
-      return res.redirect('https://' + req.get('host') + req.url);
-    }
-    next();
-}
+// function requireHTTPS(req, res, next) {
+//     if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
+//       return res.redirect('https://' + req.get('host') + req.url);
+//     }
+//     next();
+// }
 
-app.use(requireHTTPS);
+// app.use(requireHTTPS);
 
 
 
@@ -43,7 +43,7 @@ function shuffle(array) {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-  
+    
     return array;
 }
 
@@ -65,17 +65,15 @@ async function fetchData (sortFilterFunc, input1) {
 
     row1 = ``;
     row2 = ``;
-    row3 = ``;
-    row4 = ``;
 
     counter = 1;
 
     vertical1 = false;
     vertical2 = false;
-    vertical3 = false;
-    vertical4 = false;
 
     for (i = 0; i < data.length; ++i) {
+        console.log(counter);
+
         optimizedLink = data[i].link.slice(0, 49) + "w_1200,f_auto/" + data[i].link.slice(49);
 
         thirdLine = ' '
@@ -89,19 +87,20 @@ async function fetchData (sortFilterFunc, input1) {
                 <br>${data[i].location} <span>&#183;</span> ${(new Date(data[i].Time)).toDateString()}
             </figcaption>`
 
-
+        
         switch (counter) {
             case 1:
+                
                 if (vertical1 == true) {
                     // skip new image to even heights out
                     vertical1 = false;
                     row2 += htmlSnippet;
-                    counter++;
+                    counter = 2;
                     break;
                 }
 
                 row1 += htmlSnippet;
-                counter++;
+                counter = 2;
 
                 if (vertical(data[i].Width, data[i].Height)) {
                     vertical1 = true;
@@ -113,8 +112,8 @@ async function fetchData (sortFilterFunc, input1) {
                 if (vertical2 == true) {
                     // skip new image to even heights out
                     vertical2 = false;
-                    row3 += htmlSnippet;
-                    counter++;
+                    row1 += htmlSnippet;
+                    counter = 1;
                     break;
                 }
 
@@ -125,62 +124,19 @@ async function fetchData (sortFilterFunc, input1) {
                     vertical2 = true;
                 }
 
+
                 break;
+            case 3:
+                // console.log(i);
+                // console.log("?!")
 
-        //     case 2:
-        //         if (vertical2 == true) {
-        //             // skip new image to even heights out
-        //             vertical2 = false;
-        //             row3 += htmlSnippet;
-        //             counter++;
-        //             break;
-        //         }
-
-        //         row2 += htmlSnippet;
-        //         counter++;
-
-        //         if (vertical(data[i].Width, data[i].Height)) {
-        //             vertical2 = true;
-        //         }
-
-        //         break;
-        //     case 3:
-        //         if (vertical3 == true) {
-        //             // skip new image to even heights out
-        //             vertical3 = false;
-        //             row4 += htmlSnippet;
-        //             counter++;
-        //             break;
-        //         }
-
-        //         row3 += htmlSnippet;
-        //         counter++;
-
-        //         if (vertical(data[i].Width, data[i].Height)) {
-        //             vertical3 = true;
-        //         }
-
-        //         break;
-        //     case 4:
-        //         if (vertical4 == true) {
-        //             // skip new image to even heights out
-        //             vertical4 = false;
-        //             row1 += htmlSnippet;
-        //             counter = 1;
-        //             break;
-        //         }
-
-        //         row4 += htmlSnippet;
-        //         counter = 1;
-
-        //         if (vertical(data[i].Width, data[i].Height)) {
-        //             vertical4 = true;
-        //         }
-
-        //         break;
-        // }
+                
         }
     }
+
+    // console.log(row1);
+    // console.log('\n\n\n\n\n\n');
+    // console.log(row2);
 
     htmlCode = `
     <!DOCTYPE html>
