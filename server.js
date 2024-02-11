@@ -17,14 +17,14 @@ const PostHogClient = new PostHog.PostHog(
 )
 
 
-// function requireHTTPS(req, res, next) {
-//     if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
-//       return res.redirect('https://' + req.get('host') + req.url);
-//     }
-//     next();
-// }
+function requireHTTPS(req, res, next) {
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
+      return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+}
 
-// app.use(requireHTTPS);
+app.use(requireHTTPS);
 
 
 
@@ -81,9 +81,11 @@ async function fetchData (sortFilterFunc, input1) {
             thirdLine = `<br>${data[i].Description}`
         }
 
-        htmlSnippet = `<a href=${data[i].link} target="_blank"><img src="${optimizedLink}" style="width:100%"></a><figcaption class="figure-caption text-center">
+        htmlSnippet = `
+                ${thirdLine}
+                <a href=${data[i].link} target="_blank"><img src="${optimizedLink}" style="width:100%"></a><figcaption class="figure-caption text-center">
                 ${data[i].Model}, ${data[i].Lens}
-                <br>${data[i].Focal} <span>&#183;</span> ${data[i].FNumber} <span>&#183;</span> ${data[i].Exposure}s <span>&#183;</span> ISO${data[i].ISO} ${thirdLine}
+                <br>${data[i].Focal} <span>&#183;</span> ${data[i].FNumber} <span>&#183;</span> ${data[i].Exposure}s <span>&#183;</span> ISO${data[i].ISO} 
                 <br>${data[i].location} <span>&#183;</span> ${(new Date(data[i].Time)).toDateString()}
             </figcaption>`
 
