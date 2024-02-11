@@ -82,8 +82,9 @@ async function fetchData (sortFilterFunc, input1) {
         }
 
         htmlSnippet = `
-                ${thirdLine}
+                
                 <a href=${data[i].link} target="_blank"><img src="${optimizedLink}" style="width:100%"></a><figcaption class="figure-caption text-center">
+                ${thirdLine}
                 ${data[i].Model}, ${data[i].Lens}
                 <br>${data[i].Focal} <span>&#183;</span> ${data[i].FNumber} <span>&#183;</span> ${data[i].Exposure}s <span>&#183;</span> ISO${data[i].ISO} 
                 <br>${data[i].location} <span>&#183;</span> ${(new Date(data[i].Time)).toDateString()}
