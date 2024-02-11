@@ -78,7 +78,7 @@ async function fetchData (sortFilterFunc, input1) {
 
         thirdLine = ' '
         if (data[i].Description != '') {
-            thirdLine = `<br>${data[i].Description}`
+            thirdLine = `${data[i].Description}<br>`
         }
 
         htmlSnippet = `
