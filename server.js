@@ -212,7 +212,7 @@ async function fetchData (sortFilterFunc, input1) {
     <a href="/category/animals">Animals</a>&nbsp&nbsp
     <a href="/category/metropolitan">Metropolitan</a>&nbsp&nbsp
     <a href="/category/flowers">Flowers</a>&nbsp&nbsp
-    <a href="/category/objects">Objects</a>&nbsp&nbsp
+    <a href="/category/craft">Craft</a>&nbsp&nbsp
     <a href="/category/astrophotography">Astro</a>
 
 
